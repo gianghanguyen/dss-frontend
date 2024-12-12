@@ -1,8 +1,14 @@
+import { Box, Container } from "@mui/material";
+import SearchFilter from "../components/SearchFilter";
+
+
 export default function Home() {
+
   return (
-    <div>
-      <h1>Home</h1>
-      <p>This is the home page.</p>
-    </div>
+    <Container maxWidth="lg" sx={{ marginLeft: "8px"}}>
+      <Box display="flex" flexDirection="row">
+        <SearchFilter />
+      </Box>
+    </Container>
   );
 }
