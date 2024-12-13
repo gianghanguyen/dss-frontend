@@ -9,17 +9,24 @@ import { toast } from "react-toastify";
 
 export default function SearchFilter() {
   const [location, setLocation] = useState(null);
-  const [jobTitle, sẹtJobTitle] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
   const [open, setOpen] = useState(false);
   const [experience, setExperience] = useState("");
 
   const getResult = async () => {
     try {
+      console.log(location.longtitude)
       await api
-      .post("/", {
-        userLatitude: location.latitude,
+      .get("/calculate", {
+        salaryWeight: 1,
+        experienceWeight: 1,
+        jobTitleWeight: 1,
+        companySizeWeight: 1,
+        locationWeight: 1,
+        experience: experience, // Use the experience state
+        jobTitle: jobTitle, // Use the jobTitle state
         userLongtitude: location.longtitude,
-        experience,
+        userLatitude: location.latitude,
       })
       .then((res) => {
         console.log(res);
@@ -64,7 +71,7 @@ export default function SearchFilter() {
           type="text"
           variant="outlined"
           value={jobTitle}
-          onChange={(event) => sẹtJobTitle(event.target.value)}
+          onChange={(event) => setJobTitle(event.target.value)}
         />
       </Box>
       <Box sx={{ display: "flex-col", mt: 4 }}>
