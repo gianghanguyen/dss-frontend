@@ -15,18 +15,19 @@ export default function SearchFilter() {
 
   const getResult = async () => {
     try {
-      console.log(location.longtitude)
       await api
       .get("/calculate", {
-        salaryWeight: 1,
-        experienceWeight: 1,
-        jobTitleWeight: 1,
-        companySizeWeight: 1,
-        locationWeight: 1,
-        experience: experience, // Use the experience state
-        jobTitle: jobTitle, // Use the jobTitle state
-        userLongtitude: location.longtitude,
-        userLatitude: location.latitude,
+        params: {
+          salaryWeight: 1,
+          experienceWeight: 1,
+          jobTitleWeight: 1,
+          companySizeWeight: 1,
+          locationWeight: 1,
+          experience: experience,
+          jobTitle: jobTitle,
+          userLongtitude: location.longitude,
+          userLatitude: location.latitude,
+        },
       })
       .then((res) => {
         console.log(res);
