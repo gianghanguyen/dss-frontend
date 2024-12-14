@@ -1,5 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { InlineMath, BlockMath } from 'react-katex';
+import 'katex/dist/katex.min.css';
 
 const Table = ({ title, data, headers }) => {
   const tableContainerStyle = {
@@ -61,8 +63,7 @@ const Detail = ({ jobData }) => {
   const header1 = ["Tên Job", "Kinh Nghiệm", "Lương"];
   const header2 = ["Tên Job", "Điểm Tên", "Kinh Nghiệm", "Khoảng cách", "Lương", "Quy mô công ty"];
   const header3 = [
-    "Tên Job", "Điểm Tên", "Kinh Nghiệm", "Khoảng cách", "Lương", "Quy mô công ty", "Trọng Số Lương", "Trọng Số Kinh Nghiệm", "Trọng Số Tên Job", "Trọng Số Quy Mô Công Ty", "Trọng Số Khoảng Cách"
-  ];
+    "Tên Job", "Điểm Tên", "Kinh Nghiệm", "Khoảng cách", "Lương", "Quy mô công ty" ];
 
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -99,7 +100,6 @@ const Detail = ({ jobData }) => {
     job.location_point.toFixed(2),
     job.salary_point.toFixed(2),
     job.company_size_point.toFixed(2),
-    `Công thức: (Điểm * Trọng số)`,
   ]);
 
   const weightedTable = currentPageData.map((job) => [
@@ -109,11 +109,6 @@ const Detail = ({ jobData }) => {
     job.weighted_location_point.toFixed(2),
     job.weighted_salary_point.toFixed(2),
     job.weighted_company_size_point.toFixed(2),
-    salaryWeight.toFixed(2),
-    experienceWeight.toFixed(2),
-    jobTitleWeight.toFixed(2),
-    companySizeWeight.toFixed(2),
-    locationWeight.toFixed(2),
   ]);
 
   return (
@@ -122,10 +117,40 @@ const Detail = ({ jobData }) => {
       
       <Table title="Bảng Chuẩn Hóa" data={normalizedTable} headers={header2} />
       {/* Thêm thẻ div cho công thức */}
+      <div>
       <div style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>
         <p><strong>Công thức chuẩn hóa:</strong> Mỗi điểm được tính bằng cách nhân với trọng số tương ứng của mỗi yếu tố.</p>
-      </div>
+        <p><strong>Công thức toán học:</strong></p>
+        <p>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <InlineMath>{'\\sum_{i=1}^{n} w_i = 1'}</InlineMath>
+          </div>
+          <br />
+          <BlockMath>{'LinearAgg(x_1, x_2, x_3, \\dots, x_n) = \\sum_{i=1}^{n} w_i * x_i'}</BlockMath>
+        </p>
 
+
+        <p><strong>Các phương pháp chuẩn hóa:</strong></p>
+        <p>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <InlineMath>{'x_i = x_i / \\max \\{ x_i : i = 1, \\dots, n \\}'}</InlineMath>
+          <p>Tính chất: bảo toàn tỉ số giữa hai tham số bất kì</p>
+        </div>
+          <br />
+          <p>Cho <InlineMath>{'x_i'}</InlineMath> là thuộc tính giá, biến đổi:</p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+            <p>Cho <InlineMath>{'x_i'}</InlineMath> là thuộc tính giá, biến đổi:</p>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              <InlineMath>{'x_i = \\frac{\\max \\{ x_i \\} - x_i}{\\max \\{ x_i \\}}'}</InlineMath>
+            </div>
+            <p>hoặc:</p>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              <InlineMath>{'x_i = \\frac{x_i}{\\max \\{ x_i \\}}'}</InlineMath>
+            </div>
+          </div>
+        </p>
+      </div>
+    </div>
       <Table title="Bảng Nhân Trọng Số" data={weightedTable} headers={header3} />
       {/* Thêm thẻ div cho chú thích trọng số */}
       <div style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>
