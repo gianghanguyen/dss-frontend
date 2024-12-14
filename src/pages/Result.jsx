@@ -28,14 +28,17 @@ const JobList = () => {
                     ...jobResponse, 
                     ...companyResponse,
                     point: job.point,
-                    company_size_point: job.company_size_point,
-                    experience_point: job.experience_point,
-                    job_title_point: job.job_title_point,
-                    location_point: job.location_point,
-                    salary_point: job.salary_point
+                    company_size_point: job.weighted_company_size_point,
+                    experience_point: job.weighted_experience_point,
+                    job_title_point: job.weighted_job_title_point,
+                    location_point: job.weighted_location_point,
+                    salary_point: job.weighted_salary_point,
+                    distance_to_ideal_point: job.distance_to_weighted_ideal,
+                    distance_to_neagative_ideal_point: job.distance_to_weighted_negative_ideal,
                 }; 
             }));
             setJobs(jobsWithDetails); // Update jobs state
+            console.log(jobsWithDetails[0]);
         } catch (error) {
             console.error("Error fetching jobs:", error); // Handle errors
         }

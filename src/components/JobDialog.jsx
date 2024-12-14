@@ -79,6 +79,12 @@ const JobDialog = ({ open, onClose, selectedJob }) => {
           <Typography variant="body1" sx={{ marginBottom: 1 }}>
             <strong>Salary Point:</strong> {selectedJob?.salary_point}
           </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.main', paddingTop: 1 }}>
+            <strong>Distance to idea company:</strong> {selectedJob?.distance_to_ideal_point}
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold', color: 'primary.main'}}>
+            <strong>Distance to negative idea company:</strong> {selectedJob?.distance_to_neagative_ideal_point}
+          </Typography>
           <Typography variant="body1" sx={{ marginBottom: 2, fontWeight: 'bold', color: 'primary.main', paddingTop: 1 }}>
             <strong>Total Point:</strong> {selectedJob?.point}
           </Typography>
@@ -151,6 +157,8 @@ JobDialog.propTypes = {
       skills: PropTypes.string,
       responsibilities: PropTypes.string,
     }),
+    distance_to_ideal_point: PropTypes.number,
+    distance_to_neagative_ideal_point: PropTypes.number,
     location_point: PropTypes.number,
     company_size_point: PropTypes.number,
     job_title_point: PropTypes.number,

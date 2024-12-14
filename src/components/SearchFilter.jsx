@@ -18,11 +18,11 @@ export default function SearchFilter() {
       await api
       .get("/calculate", {
         params: {
-          salaryWeight: 1,
-          experienceWeight: 1,
-          jobTitleWeight: 1,
-          companySizeWeight: 1,
-          locationWeight: 1,
+          salaryWeight: 0.05,
+          experienceWeight: 0.2,
+          jobTitleWeight: 0.5,
+          companySizeWeight: 0.05,
+          locationWeight: 0.2,
           experience: experience,
           jobTitle: jobTitle,
           userLongtitude: location.longitude,
