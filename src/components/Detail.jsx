@@ -114,12 +114,23 @@ const Detail = ({ jobData }) => {
   return (
     <div>
       <Table title="Bảng Data" data={scoreTable} headers={header1} />
-      
+      <div>
+        <div style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>
+        <p><strong>Công thức Haversine:</strong> Sử dụng để tính khoảng cách hai điểm trên mặt cầu lý tưởng thông qua kinh độ và vĩ độ. Được sử dụng để ước lượng cách giữa hai điểm trên mặt phẳng trái đất cho viết biết kinh độ và vĩ độ của hai điểm đó.
+        </p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <InlineMath>
+              {'d = 2R \\cdot \\arcsin \\left( \\sqrt{ \\sin^2 \\left( \\frac{\\varphi_2 - \\varphi_1}{2} \\right) + \\cos(\\varphi_1) \\cos(\\varphi_2) \\sin^2 \\left( \\frac{\\lambda_2 - \\lambda_1}{2} \\right) } \\right)'}
+            </InlineMath>
+          </div>
+        </div>
+      </div>
       <Table title="Bảng Chuẩn Hóa" data={normalizedTable} headers={header2} />
       {/* Thêm thẻ div cho công thức */}
       <div>
       <div style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>
-        <p><strong>Công thức chuẩn hóa:</strong> Mỗi điểm được tính bằng cách nhân với trọng số tương ứng của mỗi yếu tố.</p>
+        <p><strong>Công thức:</strong> Mỗi điểm được tính bằng cách nhân với trọng số tương ứng của mỗi yếu tố.</p>
+
         <p><strong>Công thức toán học:</strong></p>
         <p>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -136,6 +147,7 @@ const Detail = ({ jobData }) => {
           <InlineMath>{'x_i = x_i / \\max \\{ x_i : i = 1, \\dots, n \\}'}</InlineMath>
           <p>Tính chất: bảo toàn tỉ số giữa hai tham số bất kì</p>
         </div>
+
           <br />
           <p>Cho <InlineMath>{'x_i'}</InlineMath> là thuộc tính giá, biến đổi:</p>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
@@ -149,11 +161,12 @@ const Detail = ({ jobData }) => {
             </div>
           </div>
         </p>
+
       </div>
     </div>
       <Table title="Bảng Nhân Trọng Số" data={weightedTable} headers={header3} />
       {/* Thêm thẻ div cho chú thích trọng số */}
-      <div style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>
+      <div style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>        
         <p><strong>Trọng số:</strong> 
           <ul>
             <li>Lương: {salaryWeight}</li>
