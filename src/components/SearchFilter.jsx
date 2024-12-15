@@ -3,10 +3,10 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Map from "./map";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, CircularProgress } from "@mui/material";
 import api from "../utils/api";
 import { toast } from "react-toastify";
-import Detail from "./Detail"; // Giả sử bạn đã có component Detail
+import Detail from "./Detail";
 
 export default function SearchFilter() {
   const [location, setLocation] = useState(null);
@@ -14,8 +14,10 @@ export default function SearchFilter() {
   const [open, setOpen] = useState(false);
   const [experience, setExperience] = useState("");
   const [jobData, setJobData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getResult = async () => {
+    setLoading(true); // Bắt đầu loading
     try {
       const res = await api.get("/calculate", {
         params: {
@@ -26,15 +28,17 @@ export default function SearchFilter() {
           locationWeight: 0.2,
           experience: experience,
           jobTitle: jobTitle,
-          userLongtitude: location.longitude,
-          userLatitude: location.latitude,
+          userLongtitude: location?.longitude,
+          userLatitude: location?.latitude,
         },
       });
 
-      setJobData(res.top_50_jobs); 
+      setJobData(res.top_50_jobs);
       console.log(res.top_50_jobs);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false); // Kết thúc loading
     }
   };
 
@@ -98,11 +102,22 @@ export default function SearchFilter() {
         </Button>
       </Box>
 
-      {jobData.length > 0 && (
-        <Box sx={{ width: "75%", p: "0px 20px", ml: 2 }}>
-          <Detail jobData={jobData} />
-        </Box>
-      )}
+      <Box sx={{ width: "75%", p: "0px 20px", ml: 2 }}>
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          jobData.length > 0 && <Detail jobData={jobData} />
+        )}
+      </Box>
     </Box>
   );
 }

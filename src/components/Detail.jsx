@@ -60,7 +60,7 @@ const Table = ({ title, data, headers }) => {
 };
 
 const Detail = ({ jobData }) => {
-  const header1 = ["Tên Job", "Kinh Nghiệm", "Lương"];
+  const header1 = ["Tên Job", "Kinh Nghiệm(năm)", "Lương($)", "Khoảng cách(km)"];
   const header2 = ["Tên Job", "Điểm Tên", "Kinh Nghiệm", "Khoảng cách", "Lương", "Quy mô công ty"];
   const header3 = [
     "Tên Job", "Điểm Tên", "Kinh Nghiệm", "Khoảng cách", "Lương", "Quy mô công ty" ];
@@ -91,24 +91,25 @@ const Detail = ({ jobData }) => {
     job.job_title,
     job.experience,
     job.salary,
+    job.real_distance.toFixed(2),
   ]);
 
   const normalizedTable = currentPageData.map((job) => [
     job.job_title,
-    job.job_title_point.toFixed(2),
-    job.experience_point.toFixed(2),
-    job.location_point.toFixed(2),
-    job.salary_point.toFixed(2),
-    job.company_size_point.toFixed(2),
+    job.job_title_point.toFixed(3),
+    job.experience_point.toFixed(3),
+    job.location_point.toFixed(3),
+    job.salary_point.toFixed(3),
+    job.company_size_point.toFixed(3),
   ]);
 
   const weightedTable = currentPageData.map((job) => [
     job.job_title,
-    job.weighted_job_title_point.toFixed(2),
-    job.weighted_experience_point.toFixed(2),
-    job.weighted_location_point.toFixed(2),
-    job.weighted_salary_point.toFixed(2),
-    job.weighted_company_size_point.toFixed(2),
+    job.weighted_job_title_point.toFixed(3),
+    job.weighted_experience_point.toFixed(3),
+    job.weighted_location_point.toFixed(3),
+    job.weighted_salary_point.toFixed(3),
+    job.weighted_company_size_point.toFixed(3),
   ]);
 
   return (
@@ -145,11 +146,9 @@ const Detail = ({ jobData }) => {
         <p>
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <InlineMath>{'x_i = x_i / \\max \\{ x_i : i = 1, \\dots, n \\}'}</InlineMath>
-          <p>Tính chất: bảo toàn tỉ số giữa hai tham số bất kì</p>
         </div>
-
+        <p>Tính chất: bảo toàn tỉ số giữa hai tham số bất kì</p>
           <br />
-          <p>Cho <InlineMath>{'x_i'}</InlineMath> là thuộc tính giá, biến đổi:</p>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
             <p>Cho <InlineMath>{'x_i'}</InlineMath> là thuộc tính giá, biến đổi:</p>
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -247,6 +246,41 @@ const Detail = ({ jobData }) => {
           Trang Sau
         </button>
       </div>
+
+      <div style={{ position: "relative" }}>
+        {/* Nội dung hiện tại */}
+        <div
+          style={{
+            position: "fixed",
+            bottom: "30px",
+            right: "30px",
+            zIndex: 1000, // Đảm bảo nút luôn ở trên cùng
+          }}
+        >
+          <a
+            href="/result"
+            style={{
+              padding: "12px 20px",
+              backgroundColor: "#007bff",
+              color: "white",
+              textDecoration: "none",
+              borderRadius: "25px",
+              fontWeight: "bold",
+              fontSize: "14px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              transition: "all 0.3s ease",
+              display: "inline-block",
+              textAlign: "center",
+              marginBottom: "20px", // Thêm khoảng cách dưới nút để không bị đè lên bảng
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
+          >
+            Xem Kết Quả
+          </a>
+        </div>
+      </div>
+
     </div>
   );
 };
@@ -264,7 +298,7 @@ Detail.propTypes = {
       job_title: PropTypes.string.isRequired,
       experience: PropTypes.number.isRequired,
       salary: PropTypes.number.isRequired,
-
+      real_distance: PropTypes.number.isRequired,
       
       distance_to_weighted_ideal: PropTypes.number.isRequired,
       distance_to_weighted_negative_ideal: PropTypes.number.isRequired,
