@@ -246,41 +246,6 @@ const Detail = ({ jobData }) => {
           Trang Sau
         </button>
       </div>
-
-      <div style={{ position: "relative" }}>
-        {/* Nội dung hiện tại */}
-        <div
-          style={{
-            position: "fixed",
-            bottom: "30px",
-            right: "30px",
-            zIndex: 1000, // Đảm bảo nút luôn ở trên cùng
-          }}
-        >
-          <a
-            href="/result"
-            style={{
-              padding: "12px 20px",
-              backgroundColor: "#007bff",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "25px",
-              fontWeight: "bold",
-              fontSize: "14px",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              transition: "all 0.3s ease",
-              display: "inline-block",
-              textAlign: "center",
-              marginBottom: "20px", // Thêm khoảng cách dưới nút để không bị đè lên bảng
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
-          >
-            Xem Kết Quả
-          </a>
-        </div>
-      </div>
-
     </div>
   );
 };

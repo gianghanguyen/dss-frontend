@@ -68,7 +68,7 @@ const JobList = () => {
     };
     return (
         <Box sx={{ padding: 2, display: "flex", justifyContent: "center", backgroundColor: "grey.200" }}>
-            <Grid container spacing={2} sx={{ maxWidth: "70%" }}>
+            <Grid container spacing={2} sx={{ maxWidth: "100%" }}>
                 {jobs.map((job) => (
                     <Grid item xs={12} key={job.job.job_id}>
                         <Card

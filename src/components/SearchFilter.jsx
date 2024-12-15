@@ -7,6 +7,7 @@ import { Button, TextField, CircularProgress } from "@mui/material";
 import api from "../utils/api";
 import { toast } from "react-toastify";
 import Detail from "./Detail";
+import JobList from '../pages/Result';
 
 export default function SearchFilter() {
   const [location, setLocation] = useState(null);
@@ -15,17 +16,19 @@ export default function SearchFilter() {
   const [experience, setExperience] = useState("");
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showJobList, setShowJobList] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   const getResult = async () => {
     setLoading(true); // Bắt đầu loading
     try {
       const res = await api.get("/calculate", {
         params: {
-          salaryWeight: 0.05,
-          experienceWeight: 0.2,
-          jobTitleWeight: 0.5,
-          companySizeWeight: 0.05,
-          locationWeight: 0.2,
+          salaryWeight: 0.003,
+          experienceWeight: 0.003,
+          jobTitleWeight: 0.9,
+          companySizeWeight: 0.003,
+          locationWeight: 0.091,
           experience: experience,
           jobTitle: jobTitle,
           userLongtitude: location?.longitude,
@@ -39,11 +42,12 @@ export default function SearchFilter() {
       toast.error(error.message);
     } finally {
       setLoading(false); // Kết thúc loading
+      setHasLoaded(true); // Set hasLoaded to true after loading
     }
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", width: "100%" }}>
+    <Box sx={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "flex-end" }}>
       <Box sx={{ width: "25%", p: "0px 20px" }}>
         <Typography sx={{ fontSize: 16 }}>Location</Typography>
         <Box sx={{ cursor: "pointer" }} onClick={() => setOpen(true)}>
@@ -102,7 +106,7 @@ export default function SearchFilter() {
         </Button>
       </Box>
 
-      <Box sx={{ width: "75%", p: "0px 20px", ml: 2 }}>
+      <Box sx={{ width: "100%", p: "0px 20px", ml: 2 }}>
         {loading ? (
           <Box
             sx={{
@@ -115,7 +119,18 @@ export default function SearchFilter() {
             <CircularProgress />
           </Box>
         ) : (
-          jobData.length > 0 && <Detail jobData={jobData} />
+          <>
+            {hasLoaded && jobData.length > 0 && showJobList ? (
+              <JobList jobData={jobData} />
+            ) : (
+              hasLoaded && <Detail jobData={jobData} />
+            )}
+            {hasLoaded && (
+              <Button onClick={() => setShowJobList(!showJobList)} sx={{ mt: 2 }}>
+                {showJobList ? "Xem Tính Toán" : "Xem Kết Quả"}
+              </Button>
+            )}
+          </>
         )}
       </Box>
     </Box>
